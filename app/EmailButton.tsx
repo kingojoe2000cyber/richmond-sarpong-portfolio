@@ -1,0 +1,1 @@
+export default function EmailButton(){return <a className="email-launcher" href="mailto:Kingojoe2000@mail.com?subject=Professional%20enquiry%20from%20your%20portfolio" aria-label="Email Richmond Kwadwo Sarpong"><span>@</span><b>Email</b></a>}

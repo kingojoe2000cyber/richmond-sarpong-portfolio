@@ -1,0 +1,1 @@
+export default function WhatsAppButton(){return <a className="whatsapp-launcher" href="https://wa.me/233246153838?text=Hello%20Richmond%2C%20I%20visited%20your%20professional%20portfolio%20and%20would%20like%20to%20connect." target="_blank" rel="noreferrer" aria-label="Chat with Richmond on WhatsApp"><span>W</span><b>WhatsApp</b></a>}

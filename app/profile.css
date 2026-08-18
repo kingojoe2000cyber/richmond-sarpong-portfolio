@@ -1,0 +1,16 @@
+:root{--rose:#ddc8c1}
+.projects{grid-template-columns:repeat(2,1fr)}
+.project.rose{background:var(--rose)}
+.project small{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-top:16px}
+.credential-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:90px}
+.credential-intro{line-height:1.7;color:#586863;max-width:520px}
+.responsibilities{border-left:1px solid rgba(255,255,255,.2);padding-left:48px}
+.responsibilities h3{font-family:Georgia,serif;font-size:28px;font-weight:400;margin:0 0 22px}
+.responsibilities ul{list-style:none;padding:0;margin:0}
+.responsibilities li{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.13);font-size:13px;color:#b6c3bf}
+.responsibilities li:before{content:"◆";color:var(--gold);margin-right:12px;font-size:8px}
+.contact-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.contact-actions .bright{margin-top:0}
+.outline-bright{color:white;border:1px solid rgba(255,255,255,.55)}
+@media(max-width:850px){.credential-layout{grid-template-columns:1fr;gap:42px}.responsibilities{padding-left:0;border-left:0}}
+@media(max-width:540px){.projects{grid-template-columns:1fr}.project{min-height:320px}.proof{display:grid;grid-template-columns:1fr 1fr;width:100%}}
