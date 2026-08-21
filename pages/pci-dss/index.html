@@ -9,13 +9,14 @@
   <link rel="stylesheet" href="evidence-pack.css">
   <link rel="stylesheet" href="acronyms.css">
   <link rel="stylesheet" href="v3.css">
+  <link rel="stylesheet" href="v31.css">
 </head>
 <body>
 <main class="pci-page">
   <section class="pci-hero">
     <div class="pci-shell pci-hero-grid">
       <div>
-        <p class="pci-kicker">PCI DSS v4.0.1 · Advanced Version 3</p>
+        <p class="pci-kicker">PCI DSS v4.0.1 · Advanced Version 3.1</p>
         <h1>Merchant Assurance Command Center</h1>
         <p class="pci-lead">Interactive fictional portfolio for Akwaaba Retail &amp; Online Ltd., translating requirement testing, targeted risk analysis, evidence lifecycle, payment-page security and third-party assurance into an executive view.</p>
         <div class="pci-hero-actions">
@@ -107,6 +108,14 @@
     <div class="requirement-grid" id="requirements"></div>
   </section>
 
+  <section class="pci-section pci-shell v31-suite" id="advanced-governance">
+    <div class="pci-heading"><div><p>ADVANCED GOVERNANCE SUITE</p><h2>Controlled access, traceability and automated evidence operations</h2><small class="v3-caption">Interactive fictional demonstration—no real credentials or compliance evidence.</small></div><div class="role-switcher"><label for="staticRole">View as role</label><select id="staticRole"></select></div></div>
+    <div class="permission-banner"><div><span>ACTIVE ROLE</span><strong id="staticRoleName"></strong></div><div id="staticPermissions"></div></div>
+    <div class="advanced-grid"><article class="advanced-card"><div class="advanced-card-head"><span>RBAC</span><b>Least privilege</b></div><h3>Role-based access control</h3><p>Five job-aligned roles separate administration, ownership, assessment and oversight.</p><div class="role-list" id="staticRoleList"></div></article><article class="advanced-card"><div class="advanced-card-head"><span>AUDIT</span><b class="verified-chain">Chain verified</b></div><h3>Immutable audit history</h3><p>Tamper-evident events link each record to its predecessor.</p><div class="audit-chain" id="staticAudit"></div><button class="advanced-action" data-export="audit">Export audit CSV ↓</button></article></div>
+    <div class="advanced-grid lower"><article class="advanced-card reminders-card"><div class="advanced-card-head"><span>AUTOMATION</span><b>4 active rules</b></div><h3>Automated reminders</h3><p>Evidence, remediation, TRA and provider triggers route alerts to accountable owners.</p><div class="reminder-list" id="staticReminders"></div><button class="advanced-action" id="runReminders">Run reminder cycle</button><small class="simulation-status" id="reminderResult">Ready — simulation has not run</small></article><article class="advanced-card export-card"><div class="advanced-card-head"><span>REPORTING</span><b>CSV + PDF</b></div><h3>Assessor-ready exports</h3><p>Generate portable datasets or save the print layout as PDF.</p><div class="export-actions"><button data-export="controls">Controls CSV</button><button data-export="evidence">Evidence CSV</button><button id="printReport">Print / save PDF</button></div></article></div>
+    <article class="connector-panel"><div class="pci-heading"><div><p>EVIDENCE-SYSTEM INTEGRATIONS</p><h2>Connector operations center</h2><small class="v3-caption">Configuration demonstrations only—no tenant credentials are stored.</small></div><span class="connector-health">3 connected · 2 ready</span></div><div class="connector-grid" id="staticConnectors"></div></article>
+  </section>
+
   <section class="pci-section pci-soft" id="assessment-workspace">
     <div class="pci-shell"><div class="pci-heading"><div><p>02 / REQUIREMENT-LEVEL ASSESSMENT</p><h2>Test every control, owner and evidence decision</h2><small class="v3-caption">A reviewer-ready workspace spanning all 12 requirement families.</small></div><div class="assessment-filter-stack"><label>Family<select id="controlFamily"><option value="All">All families</option></select></label><label>Status<select id="controlStatus"><option>All</option><option>Implemented</option><option>Partial</option><option>Missing</option></select></label></div></div><div class="assessment-stats" id="assessmentStats"></div><div class="v3-table-wrap"><table class="v3-table assessment-table"><thead><tr><th>Control</th><th>Requirement</th><th>Test procedure</th><th>Owner</th><th>Status</th><th>Evidence</th><th>Finding / action</th></tr></thead><tbody id="controlBody"></tbody></table></div></div>
   </section>
@@ -148,11 +157,12 @@
     <div class="pci-shell"><div class="pci-heading inverse"><div><p>06 / EXECUTIVE GOVERNANCE</p><h2>Decision gates that prove the program is maturing</h2></div></div><div class="checkpoint-grid" id="checkpoints"></div><div class="closure-note"><b>Closure principle</b><p>Remediation is complete only when the control is implemented, independently checked, technically retested where applicable and supported by durable, attributable evidence.</p></div></div>
   </section>
 
-  <footer class="pci-footer"><div class="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V3</span><a href="#scorecard">Back to scorecard ↑</a></div></footer>
+  <footer class="pci-footer"><div class="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V3.1</span><a href="#scorecard">Back to scorecard ↑</a></div></footer>
 </main>
 <script src="dashboard.js"></script>
 <script src="evidence-pack.js"></script>
 <script src="acronyms.js"></script>
 <script src="v3.js"></script>
+<script src="v31.js"></script>
 </body>
 </html>
