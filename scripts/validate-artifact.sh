@@ -24,21 +24,7 @@ import { readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 
 const [workerPath, hostingPath] = process.argv.slice(2);
-const hosting = JSON.parse(await readFile(hostingPath, "utf8"));
-const workerSource = await readFile(workerPath, "utf8");
-
-// D1/R2 route bundles legitimately retain the Cloudflare runtime module URL,
-// which plain Node cannot import. In that case validate the emitted ESM worker
-// shape statically; the Cloudflare deployment runtime performs the executable check.
-if (hosting.d1 || hosting.r2) {
-  if (!/export\s*\{[^}]*default/.test(workerSource) && !/export\s+default/.test(workerSource)) {
-    throw new Error("dist/server/index.js must expose an ESM default export");
-  }
-  if (!/fetch/.test(workerSource)) {
-    throw new Error("dist/server/index.js must contain a fetch handler");
-  }
-  process.exit(0);
-}
+JSON.parse(await readFile(hostingPath, "utf8"));
 
 const workerUrl = pathToFileURL(workerPath);
 workerUrl.searchParams.set("sites-validation", `${process.pid}-${Date.now()}`);
