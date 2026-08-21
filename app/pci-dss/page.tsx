@@ -1,10 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { checkpoints, evidence, gaps, remediation, requirementReadiness, risks } from "./data";
+import { assessmentControls, checkpoints, evidence, evidenceLifecycle, gaps, paymentScripts, remediation, requirementReadiness, risks, targetedRiskAnalyses, thirdPartyProviders } from "./data";
 import "./pci-dss.css";
 import "./evidence-pack.css";
 import "./acronyms.css";
+import "./v3.css";
 
 const severityOrder: Record<string, number> = { Critical: 4, High: 3, Medium: 2, Low: 1 };
 
@@ -20,6 +21,9 @@ const evidencePackDocuments = [
 export default function PciDssDashboard() {
   const [severity, setSeverity] = useState("All");
   const [evidenceFilter, setEvidenceFilter] = useState("All");
+  const [assessmentFamily, setAssessmentFamily] = useState("All");
+  const [assessmentStatus, setAssessmentStatus] = useState("All");
+  const [lifecycleFilter, setLifecycleFilter] = useState("All");
 
   const filteredGaps = useMemo(() => {
     if (severity === "All") return gaps;
@@ -30,6 +34,15 @@ export default function PciDssDashboard() {
     if (evidenceFilter === "All") return evidence;
     return evidence.filter((item) => item.readiness === evidenceFilter);
   }, [evidenceFilter]);
+
+  const filteredControls = useMemo(() => assessmentControls.filter((item) =>
+    (assessmentFamily === "All" || item.family === Number(assessmentFamily)) &&
+    (assessmentStatus === "All" || item.status === assessmentStatus),
+  ), [assessmentFamily, assessmentStatus]);
+
+  const filteredLifecycle = useMemo(() => lifecycleFilter === "All"
+    ? evidenceLifecycle
+    : evidenceLifecycle.filter((item) => item.freshness === lifecycleFilter), [lifecycleFilter]);
 
   const readinessScore = Math.round(
     requirementReadiness.reduce((sum, item) => sum + item.score, 0) / requirementReadiness.length,
@@ -44,14 +57,16 @@ export default function PciDssDashboard() {
       <section className="pci-hero">
         <div className="pci-shell pci-hero-grid">
           <div>
-            <p className="pci-kicker">PCI DSS v4.0.1 · Version 2</p>
-            <h1>Merchant Readiness Command Center</h1>
+            <p className="pci-kicker">PCI DSS v4.0.1 · Advanced Version 3</p>
+            <h1>Merchant Assurance Command Center</h1>
             <p className="pci-lead">
               Interactive portfolio dashboard for Akwaaba Retail &amp; Online Ltd. (fictional), translating PCI scope,
-              control gaps, evidence readiness, risk and remediation into an executive view.
+              requirement testing, targeted risk analysis, evidence lifecycle, payment-page security, third-party assurance,
+              control gaps and remediation into an executive view.
             </p>
             <div className="pci-hero-actions">
               <a className="pci-btn primary" href="#scorecard">Open scorecard</a>
+              <a className="pci-btn ghost" href="#v3-workspaces">Explore V3 modules</a>
               <a className="pci-btn ghost pack-action" href="#evidence-pack">Download evidence pack</a>
               <a className="pci-btn ghost" href="../">Back to portfolio</a>
               <a
@@ -82,6 +97,15 @@ export default function PciDssDashboard() {
         <article><span>Missing evidence areas</span><strong>{missingEvidence}</strong><small>Requirements 3, 10 and 11</small></article>
         <article><span>Remediation horizon</span><strong>180d</strong><small>Five executive checkpoints</small></article>
       </section>
+
+      <nav className="pci-shell v3-module-nav" id="v3-workspaces" aria-label="Version 3 workspaces">
+        <span>V3 WORKSPACES</span>
+        <a href="#assessment-workspace">Requirement testing</a>
+        <a href="#targeted-risk-analysis">Targeted risk analysis</a>
+        <a href="#evidence-lifecycle">Evidence lifecycle</a>
+        <a href="#script-security">Script security</a>
+        <a href="#third-party-governance">Third-party governance</a>
+      </nav>
 
       <section className="evidence-pack-section" id="evidence-pack">
         <div className="pci-shell">
@@ -145,10 +169,58 @@ export default function PciDssDashboard() {
         </div>
       </section>
 
+      <section className="pci-section pci-soft" id="assessment-workspace">
+        <div className="pci-shell">
+          <div className="pci-heading">
+            <div><p>02 / REQUIREMENT-LEVEL ASSESSMENT</p><h2>Control testing across all 12 requirement families</h2><span className="v3-caption">24 representative sub-requirements · testing procedures · evidence · assessor conclusions</span></div>
+            <div className="assessment-filter-stack">
+              <label>Requirement family<select value={assessmentFamily} onChange={(event) => setAssessmentFamily(event.target.value)}><option>All</option>{requirementReadiness.map((item) => <option key={item.id} value={item.id}>Requirement {item.id}</option>)}</select></label>
+              <label>Implementation<select value={assessmentStatus} onChange={(event) => setAssessmentStatus(event.target.value)}><option>All</option><option>Implemented</option><option>Partial</option><option>Missing</option><option>Verified N/A</option></select></label>
+            </div>
+          </div>
+          <div className="assessment-stats">
+            <article><strong>{assessmentControls.length}</strong><span>controls tested</span></article>
+            <article><strong>{assessmentControls.filter((item) => item.status === "Implemented" || item.status === "Verified N/A").length}</strong><span>effective / verified</span></article>
+            <article><strong>{assessmentControls.filter((item) => item.finding === "Critical" || item.finding === "High").length}</strong><span>priority findings</span></article>
+            <article><strong>{assessmentControls.filter((item) => item.due !== "-").length}</strong><span>actions tracked</span></article>
+          </div>
+          <div className="v3-table-wrap">
+            <table className="v3-table assessment-table">
+              <thead><tr><th>Requirement</th><th>Control and applicability</th><th>Testing procedure</th><th>Owner</th><th>Status</th><th>Evidence</th><th>Assessor note</th><th>Finding / due</th></tr></thead>
+              <tbody>{filteredControls.map((item) => <tr key={item.ref}><td><b>{item.ref}</b><small>Family {item.family}</small></td><td><strong>{item.control}</strong><small>{item.applicability}</small></td><td>{item.procedure}</td><td>{item.owner}</td><td><span className={`v3-status ${item.status.toLowerCase().replaceAll(" ", "-")}`}>{item.status}</span></td><td><a href="#evidence-lifecycle">{item.evidence}</a></td><td>{item.assessor}</td><td><span className={`pill ${item.finding.toLowerCase()}`}>{item.finding}</span><small>{item.due === "-" ? "No action" : `Due ${item.due}`}</small></td></tr>)}</tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section className="pci-section pci-ink" id="targeted-risk-analysis">
+        <div className="pci-shell">
+          <div className="pci-heading inverse"><div><p>03 / TARGETED RISK ANALYSIS</p><h2>Frequency decisions and customized controls</h2><span className="v3-caption inverse">Threat-led analysis with residual risk, approval and review accountability</span></div></div>
+          <div className="tra-grid">{targetedRiskAnalyses.map((item) => <article key={item.id} className="tra-card"><div><span>{item.id}</span><b className={`approval ${item.approval.toLowerCase()}`}>{item.approval}</b></div><h3>{item.decision}</h3><p className="tra-ref">Requirement {item.requirement}</p><dl><div><dt>Threat</dt><dd>{item.threat}</dd></div><div><dt>Control design</dt><dd>{item.controls}</dd></div><div><dt>Risk analysis</dt><dd>Likelihood {item.likelihood} × Impact {item.impact} · Residual score {item.residual}</dd></div><div><dt>Governance</dt><dd>{item.reviewer} · Review {item.reviewDate}</dd></div></dl></article>)}</div>
+        </div>
+      </section>
+
+      <section className="pci-section pci-shell" id="evidence-lifecycle">
+        <div className="pci-heading"><div><p>04 / EVIDENCE LIFECYCLE MANAGEMENT</p><h2>Fresh, attributable and reviewable audit evidence</h2><span className="v3-caption">Collection · expiry · review decision · version · SHA-256 traceability</span></div><div className="filter-group" aria-label="Evidence freshness filters">{["All", "Current", "Due soon", "Expired", "Missing"].map((option) => <button key={option} onClick={() => setLifecycleFilter(option)} className={lifecycleFilter === option ? "active" : ""}>{option}</button>)}</div></div>
+        <div className="evidence-health"><div><strong>{evidenceLifecycle.filter((item) => item.freshness === "Current").length}</strong><span>Current</span></div><div><strong>{evidenceLifecycle.filter((item) => item.freshness === "Due soon").length}</strong><span>Due soon</span></div><div><strong>{evidenceLifecycle.filter((item) => item.freshness === "Expired").length}</strong><span>Expired</span></div><div><strong>{evidenceLifecycle.filter((item) => item.freshness === "Missing").length}</strong><span>Missing</span></div></div>
+        <div className="v3-table-wrap"><table className="v3-table"><thead><tr><th>Evidence</th><th>Requirement</th><th>Description</th><th>Owner</th><th>Collected / expires</th><th>Freshness</th><th>Review</th><th>Version / SHA-256</th></tr></thead><tbody>{filteredLifecycle.map((item) => <tr key={item.id}><td><b>{item.id}</b></td><td>{item.requirement}</td><td>{item.description}</td><td>{item.owner}</td><td>{item.collected}<small>{item.expires === "-" ? "No expiry" : `Expires ${item.expires}`}</small></td><td><span className={`freshness ${item.freshness.toLowerCase().replace(" ", "-")}`}>{item.freshness}</span></td><td>{item.review}</td><td><b>{item.version}</b><small>{item.hash}</small></td></tr>)}</tbody></table></div>
+      </section>
+
+      <section className="pci-section pci-soft" id="script-security">
+        <div className="pci-shell"><div className="pci-heading"><div><p>05 / E-COMMERCE SCRIPT SECURITY</p><h2>Payment-page authorization, integrity and tamper monitoring</h2><span className="v3-caption">PCI DSS 6.4.3 and 11.6.1 control register</span></div><div className="script-score"><strong>{paymentScripts.filter((item) => item.result === "Pass").length}/{paymentScripts.length}</strong><span>scripts passing</span></div></div>
+          <div className="script-grid">{paymentScripts.map((item) => <article key={item.id} className={`script-card ${item.result.toLowerCase()}`}><div><span>{item.id}</span><b>{item.result}</b></div><h3>{item.name}</h3><p>{item.source} · {item.purpose}</p><dl><div><dt>Owner</dt><dd>{item.owner}</dd></div><div><dt>Authorization</dt><dd>{item.authorization}</dd></div><div><dt>Integrity</dt><dd>{item.integrity}</dd></div><div><dt>HTTP headers</dt><dd>{item.headers}</dd></div><div><dt>Monitoring</dt><dd>{item.monitoring}</dd></div></dl></article>)}</div>
+        </div>
+      </section>
+
+      <section className="pci-section pci-shell" id="third-party-governance">
+        <div className="pci-heading"><div><p>06 / THIRD-PARTY SERVICE PROVIDER GOVERNANCE</p><h2>Shared responsibility, assurance and contingency</h2><span className="v3-caption">AOC status · contractual duties · monitoring · exit readiness</span></div></div>
+        <div className="tpsp-grid">{thirdPartyProviders.map((item) => <article className="tpsp-card" key={item.id}><div className="tpsp-head"><span>{item.id}</span><b className={`risk-band ${item.status.toLowerCase()}`}>{item.status} risk</b></div><h3>{item.provider}</h3><p>{item.service}</p><dl><div><dt>PCI scope</dt><dd>{item.scope}</dd></div><div><dt>Responsibility</dt><dd>{item.responsibility}</dd></div><div><dt>Assurance</dt><dd>{item.aoc} · assessed {item.assessment}</dd></div><div><dt>Renewal</dt><dd>{item.renewal}</dd></div><div><dt>Contract</dt><dd>{item.contract}</dd></div><div><dt>Monitoring</dt><dd>{item.monitoring}</dd></div><div><dt>Contingency</dt><dd>{item.contingency}</dd></div></dl></article>)}</div>
+      </section>
+
       <section className="pci-section pci-ink" id="risk-heatmap">
         <div className="pci-shell">
           <div className="pci-heading inverse">
-            <div><p>02 / RISK HEAT MAP</p><h2>Inherent PCI risk concentration</h2></div>
+            <div><p>07 / RISK HEAT MAP</p><h2>Inherent PCI risk concentration</h2></div>
             <p className="pci-subcopy">Likelihood × impact. Hover or focus on a risk card to review ownership and residual target.</p>
           </div>
           <div className="heatmap-layout">
@@ -184,7 +256,7 @@ export default function PciDssDashboard() {
 
       <section className="pci-section pci-shell" id="evidence">
         <div className="pci-heading">
-          <div><p>03 / EVIDENCE TRACKER</p><h2>What an independent reviewer would expect to see</h2></div>
+          <div><p>08 / EVIDENCE EXPECTATION MATRIX</p><h2>What an independent reviewer would expect to see</h2></div>
           <div className="filter-group" aria-label="Evidence filters">
             {["All", "Partial", "Missing"].map((option) => (
               <button key={option} onClick={() => setEvidenceFilter(option)} className={evidenceFilter === option ? "active" : ""}>{option}</button>
@@ -209,7 +281,7 @@ export default function PciDssDashboard() {
       <section className="pci-section pci-soft" id="gaps">
         <div className="pci-shell">
           <div className="pci-heading">
-            <div><p>04 / GAP REGISTER</p><h2>Representative control gaps and recommended action</h2></div>
+            <div><p>09 / GAP REGISTER</p><h2>Representative control gaps and recommended action</h2></div>
             <div className="filter-group" aria-label="Gap severity filters">
               {["All", "Critical", "High", "Medium"].map((option) => (
                 <button key={option} onClick={() => setSeverity(option)} className={severity === option ? "active" : ""}>{option}</button>
@@ -229,7 +301,7 @@ export default function PciDssDashboard() {
       </section>
 
       <section className="pci-section pci-shell" id="remediation">
-        <div className="pci-heading"><div><p>05 / REMEDIATION ROADMAP</p><h2>Prioritized 180-day closure plan</h2></div></div>
+        <div className="pci-heading"><div><p>10 / REMEDIATION ROADMAP</p><h2>Prioritized 180-day closure plan</h2></div></div>
         <div className="roadmap">
           {remediation.map((item) => (
             <article key={`${item.window}-${item.action}`}>
@@ -242,7 +314,7 @@ export default function PciDssDashboard() {
 
       <section className="pci-section pci-ink" id="governance">
         <div className="pci-shell">
-          <div className="pci-heading inverse"><div><p>06 / EXECUTIVE GOVERNANCE</p><h2>Decision gates that prove the program is maturing</h2></div></div>
+          <div className="pci-heading inverse"><div><p>11 / EXECUTIVE GOVERNANCE</p><h2>Decision gates that prove the program is maturing</h2></div></div>
           <div className="checkpoint-grid">
             {checkpoints.map((checkpoint) => (
               <article key={checkpoint.day}><span>{checkpoint.day}</span><h3>{checkpoint.decision}</h3><p>{checkpoint.evidence}</p></article>
@@ -256,7 +328,7 @@ export default function PciDssDashboard() {
       </section>
 
       <footer className="pci-footer">
-        <div className="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V2</span><a href="#scorecard">Back to scorecard ↑</a></div>
+        <div className="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V3</span><a href="#scorecard">Back to scorecard ↑</a></div>
       </footer>
     </main>
   );

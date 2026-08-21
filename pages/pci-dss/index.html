@@ -3,22 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="PCI DSS v4.0.1 Merchant Readiness Command Center and professional evidence pack — fictional independent portfolio case study by Richmond Kwadwo Sarpong.">
-  <title>PCI DSS v4.0.1 Merchant Readiness Dashboard | Richmond Sarpong</title>
+  <meta name="description" content="PCI DSS v4.0.1 Merchant Assurance Command Center Version 3 — advanced fictional portfolio case study by Richmond Kwadwo Sarpong.">
+  <title>PCI DSS v4.0.1 Merchant Assurance Dashboard V3 | Richmond Sarpong</title>
   <link rel="stylesheet" href="pci.css">
   <link rel="stylesheet" href="evidence-pack.css">
   <link rel="stylesheet" href="acronyms.css">
+  <link rel="stylesheet" href="v3.css">
 </head>
 <body>
 <main class="pci-page">
   <section class="pci-hero">
     <div class="pci-shell pci-hero-grid">
       <div>
-        <p class="pci-kicker">PCI DSS v4.0.1 · Version 2</p>
-        <h1>Merchant Readiness Command Center</h1>
-        <p class="pci-lead">Interactive portfolio dashboard for Akwaaba Retail &amp; Online Ltd. (fictional), translating PCI scope, control gaps, evidence readiness, risk and remediation into an executive view.</p>
+        <p class="pci-kicker">PCI DSS v4.0.1 · Advanced Version 3</p>
+        <h1>Merchant Assurance Command Center</h1>
+        <p class="pci-lead">Interactive fictional portfolio for Akwaaba Retail &amp; Online Ltd., translating requirement testing, targeted risk analysis, evidence lifecycle, payment-page security and third-party assurance into an executive view.</p>
         <div class="pci-hero-actions">
           <a class="pci-btn primary" href="#scorecard">Open scorecard</a>
+          <a class="pci-btn ghost" href="#v3-workspaces">Explore V3 modules</a>
           <a class="pci-btn pack-action evidence-bundle-download" href="#evidence-pack">Download Evidence Pack ↓</a>
           <a class="pci-btn ghost" href="../">Back to portfolio</a>
           <a class="pci-btn ghost" target="_blank" rel="noreferrer" href="https://github.com/kingojoe2000cyber/richmond-sarpong-portfolio/tree/main/app/pci-dss">View GitHub ↗</a>
@@ -33,6 +35,10 @@
   </section>
 
   <section class="pci-shell pci-summary" id="summary"></section>
+
+  <nav class="pci-shell v3-module-nav" id="v3-workspaces" aria-label="Version 3 workspaces">
+    <span>V3 WORKSPACES</span><a href="#assessment-workspace">Requirement testing</a><a href="#targeted-risk-analysis">Targeted risk analysis</a><a href="#evidence-lifecycle">Evidence lifecycle</a><a href="#script-security">Script security</a><a href="#third-party-governance">Third-party governance</a>
+  </nav>
 
   <section class="evidence-pack-section" id="evidence-pack">
     <div class="pci-shell">
@@ -101,6 +107,26 @@
     <div class="requirement-grid" id="requirements"></div>
   </section>
 
+  <section class="pci-section pci-soft" id="assessment-workspace">
+    <div class="pci-shell"><div class="pci-heading"><div><p>02 / REQUIREMENT-LEVEL ASSESSMENT</p><h2>Test every control, owner and evidence decision</h2><small class="v3-caption">A reviewer-ready workspace spanning all 12 requirement families.</small></div><div class="assessment-filter-stack"><label>Family<select id="controlFamily"><option value="All">All families</option></select></label><label>Status<select id="controlStatus"><option>All</option><option>Implemented</option><option>Partial</option><option>Missing</option></select></label></div></div><div class="assessment-stats" id="assessmentStats"></div><div class="v3-table-wrap"><table class="v3-table assessment-table"><thead><tr><th>Control</th><th>Requirement</th><th>Test procedure</th><th>Owner</th><th>Status</th><th>Evidence</th><th>Finding / action</th></tr></thead><tbody id="controlBody"></tbody></table></div></div>
+  </section>
+
+  <section class="pci-section pci-ink" id="targeted-risk-analysis">
+    <div class="pci-shell"><div class="pci-heading inverse"><div><p>03 / TARGETED RISK ANALYSIS</p><h2>Document risk-based frequency and customized controls</h2><small class="v3-caption inverse">Traceable approval, review dates and residual-risk decisions.</small></div></div><div class="tra-grid" id="traGrid"></div></div>
+  </section>
+
+  <section class="pci-section pci-shell" id="evidence-lifecycle">
+    <div class="pci-heading"><div><p>04 / EVIDENCE LIFECYCLE</p><h2>Keep proof attributable, current and reviewable</h2></div><div class="filter-group" id="freshnessFilters"><button data-filter="All" class="active">All</button><button data-filter="Current">Current</button><button data-filter="Due Soon">Due soon</button><button data-filter="Expired">Expired</button></div></div><div class="evidence-health" id="evidenceHealth"></div><div class="v3-table-wrap"><table class="v3-table"><thead><tr><th>Evidence</th><th>Requirement</th><th>Owner</th><th>Collected</th><th>Review due</th><th>Freshness</th><th>Integrity</th></tr></thead><tbody id="lifecycleBody"></tbody></table></div>
+  </section>
+
+  <section class="pci-section pci-soft" id="script-security">
+    <div class="pci-shell"><div class="pci-heading"><div><p>05 / PAYMENT-PAGE SCRIPT SECURITY</p><h2>Authorize, inventory and monitor every browser script</h2></div><div class="script-score" id="scriptScore"></div></div><div class="script-grid" id="scriptGrid"></div></div>
+  </section>
+
+  <section class="pci-section pci-shell" id="third-parties">
+    <div class="pci-heading"><div><p>06 / THIRD-PARTY GOVERNANCE</p><h2>Track responsibility, assurance and contingency</h2></div></div><div class="tpsp-grid" id="tpspGrid"></div>
+  </section>
+
   <section class="pci-section pci-ink" id="risk-heatmap">
     <div class="pci-shell"><div class="pci-heading inverse"><div><p>02 / RISK HEAT MAP</p><h2>Inherent PCI risk concentration</h2></div><p class="pci-subcopy">Likelihood × impact. Risk IDs are plotted in their inherent-risk cells.</p></div><div class="heatmap-layout"><div class="heatmap" id="heatmap"><div class="heat-axis x">Likelihood →</div><div class="heat-axis y">Impact →</div></div><div class="risk-list" id="riskList"></div></div></div>
   </section>
@@ -122,10 +148,11 @@
     <div class="pci-shell"><div class="pci-heading inverse"><div><p>06 / EXECUTIVE GOVERNANCE</p><h2>Decision gates that prove the program is maturing</h2></div></div><div class="checkpoint-grid" id="checkpoints"></div><div class="closure-note"><b>Closure principle</b><p>Remediation is complete only when the control is implemented, independently checked, technically retested where applicable and supported by durable, attributable evidence.</p></div></div>
   </section>
 
-  <footer class="pci-footer"><div class="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V2</span><a href="#scorecard">Back to scorecard ↑</a></div></footer>
+  <footer class="pci-footer"><div class="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V3</span><a href="#scorecard">Back to scorecard ↑</a></div></footer>
 </main>
 <script src="dashboard.js"></script>
 <script src="evidence-pack.js"></script>
 <script src="acronyms.js"></script>
+<script src="v3.js"></script>
 </body>
 </html>
