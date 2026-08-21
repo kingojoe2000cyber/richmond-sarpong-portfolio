@@ -6,8 +6,39 @@ import "./pci-dss.css";
 import "./evidence-pack.css";
 import "./acronyms.css";
 import "./v3.css";
+import "./v31.css";
 
 const severityOrder: Record<string, number> = { Critical: 4, High: 3, Medium: 2, Low: 1 };
+
+const roles = {
+  "Program Administrator": ["Manage users", "Configure connectors", "Edit controls", "Approve evidence", "Export reports"],
+  "Compliance Manager": ["Edit controls", "Approve evidence", "Schedule reminders", "Export reports"],
+  "Control Owner": ["Upload evidence", "Update assigned controls", "Respond to reminders"],
+  "Independent Assessor": ["Review evidence", "Record findings", "Export reports"],
+  "Executive Viewer": ["View dashboards", "Export reports"],
+} as const;
+
+const auditEvents = [
+  { id: "AUD-1008", time: "2026-08-21 15:42", actor: "A. Mensah", action: "Approved evidence", object: "EV-019", previous: "9df1…bc20", hash: "34fa…c772" },
+  { id: "AUD-1007", time: "2026-08-21 14:10", actor: "K. Owusu", action: "Updated control status", object: "10.4.1", previous: "128c…90a1", hash: "9df1…bc20" },
+  { id: "AUD-1006", time: "2026-08-21 11:25", actor: "System", action: "Evidence reminder issued", object: "EV-012", previous: "c880…182e", hash: "128c…90a1" },
+  { id: "AUD-1005", time: "2026-08-20 17:03", actor: "R. Sarpong", action: "Rejected evidence", object: "EV-006", previous: "genesis", hash: "c880…182e" },
+] as const;
+
+const reminderRules = [
+  { id: "REM-01", trigger: "Evidence expires in 30 days", audience: "Evidence owner + Compliance", channel: "Email + dashboard", next: "2026-09-01", status: "Active" },
+  { id: "REM-02", trigger: "Remediation due in 14 days", audience: "Control owner", channel: "Email", next: "2026-08-31", status: "Active" },
+  { id: "REM-03", trigger: "TRA review due in 45 days", audience: "Risk owner + Approver", channel: "Dashboard", next: "2026-09-15", status: "Active" },
+  { id: "REM-04", trigger: "TPSP assurance expires in 60 days", audience: "Vendor Risk Lead", channel: "Email + dashboard", next: "2026-09-01", status: "Active" },
+] as const;
+
+const connectors = [
+  { id: "CON-01", name: "Microsoft SharePoint", type: "Document repository", mapping: "PCI Evidence Library", status: "Connected", lastSync: "2026-08-21 14:30" },
+  { id: "CON-02", name: "Microsoft OneDrive", type: "Evidence intake", mapping: "Control Owner Uploads", status: "Connected", lastSync: "2026-08-21 13:15" },
+  { id: "CON-03", name: "ServiceNow GRC", type: "Control and finding exchange", mapping: "PCI Assessment", status: "Ready", lastSync: "Not run" },
+  { id: "CON-04", name: "Jira", type: "Remediation tickets", mapping: "PCI-DSS project", status: "Connected", lastSync: "2026-08-21 15:00" },
+  { id: "CON-05", name: "AWS Security Hub", type: "Technical evidence feed", mapping: "CDE findings", status: "Ready", lastSync: "Not run" },
+] as const;
 
 const evidencePackDocuments = [
   { no: "01", title: "Executive Readiness Report", copy: "Management-level summary of scope, readiness result, priority exposures, governance expectations and immediate actions.", file: "PCI_DSS_V2_Executive_Report.pdf", acronyms: [["AOC", "Attestation of Compliance"], ["CDE", "Cardholder Data Environment"], ["MFA", "Multi-Factor Authentication"], ["PCI DSS", "Payment Card Industry Data Security Standard"], ["QSA", "Qualified Security Assessor"], ["ROC", "Report on Compliance"]] },
@@ -24,6 +55,23 @@ export default function PciDssDashboard() {
   const [assessmentFamily, setAssessmentFamily] = useState("All");
   const [assessmentStatus, setAssessmentStatus] = useState("All");
   const [lifecycleFilter, setLifecycleFilter] = useState("All");
+  const [activeRole, setActiveRole] = useState<keyof typeof roles>("Program Administrator");
+  const [reminderStatus, setReminderStatus] = useState("Ready — simulation has not run");
+  const [connectorRuns, setConnectorRuns] = useState<Record<string, string>>({});
+
+  const downloadCsv = (dataset: "controls" | "evidence" | "audit") => {
+    const rows = dataset === "controls"
+      ? [["Requirement", "Control", "Owner", "Status", "Finding", "Due"], ...assessmentControls.map((item) => [item.ref, item.control, item.owner, item.status, item.finding, item.due])]
+      : dataset === "evidence"
+        ? [["Evidence ID", "Requirement", "Description", "Owner", "Freshness", "Review", "Version", "Hash"], ...evidenceLifecycle.map((item) => [item.id, item.requirement, item.description, item.owner, item.freshness, item.review, item.version, item.hash])]
+        : [["Event ID", "Timestamp", "Actor", "Action", "Object", "Previous Hash", "Event Hash"], ...auditEvents.map((item) => [item.id, item.time, item.actor, item.action, item.object, item.previous, item.hash])];
+    const csv = rows.map((row) => row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(",")).join("\n");
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    link.download = `pci-dss-${dataset}-export.csv`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
 
   const filteredGaps = useMemo(() => {
     if (severity === "All") return gaps;
@@ -57,7 +105,7 @@ export default function PciDssDashboard() {
       <section className="pci-hero">
         <div className="pci-shell pci-hero-grid">
           <div>
-            <p className="pci-kicker">PCI DSS v4.0.1 · Advanced Version 3</p>
+            <p className="pci-kicker">PCI DSS v4.0.1 · Advanced Version 3.1</p>
             <h1>Merchant Assurance Command Center</h1>
             <p className="pci-lead">
               Interactive portfolio dashboard for Akwaaba Retail &amp; Online Ltd. (fictional), translating PCI scope,
@@ -105,7 +153,25 @@ export default function PciDssDashboard() {
         <a href="#evidence-lifecycle">Evidence lifecycle</a>
         <a href="#script-security">Script security</a>
         <a href="#third-party-governance">Third-party governance</a>
+        <a href="#advanced-governance">Access &amp; automation</a>
       </nav>
+
+      <section className="pci-section pci-shell v31-suite" id="advanced-governance">
+        <div className="pci-heading"><div><p>ADVANCED GOVERNANCE SUITE</p><h2>Controlled access, traceability and automated evidence operations</h2><span className="v3-caption">Interactive portfolio demonstration · simulated identities, reminders and connector responses</span></div><div className="role-switcher"><label htmlFor="active-role">View as role</label><select id="active-role" value={activeRole} onChange={(event) => setActiveRole(event.target.value as keyof typeof roles)}>{Object.keys(roles).map((role) => <option key={role}>{role}</option>)}</select></div></div>
+        <div className="permission-banner"><div><span>ACTIVE ROLE</span><strong>{activeRole}</strong></div><div>{roles[activeRole].map((permission) => <b key={permission}>✓ {permission}</b>)}</div></div>
+
+        <div className="advanced-grid">
+          <article className="advanced-card"><div className="advanced-card-head"><span>RBAC</span><b>Least privilege</b></div><h3>Role-based access control</h3><p>Five job-aligned roles separate administration, control ownership, independent review and executive oversight.</p><div className="role-list">{Object.entries(roles).map(([role, permissions]) => <div key={role} className={role === activeRole ? "active" : ""}><strong>{role}</strong><small>{permissions.length} permissions</small></div>)}</div></article>
+          <article className="advanced-card"><div className="advanced-card-head"><span>AUDIT</span><b className="verified-chain">Chain verified</b></div><h3>Immutable audit history</h3><p>Each event references the previous record, creating a tamper-evident hash chain for accountability.</p><div className="audit-chain">{auditEvents.map((event) => <div key={event.id}><i /><span><b>{event.id} · {event.action}</b><small>{event.time} · {event.actor} · {event.object}</small><code>{event.previous} → {event.hash}</code></span></div>)}</div><button className="advanced-action" onClick={() => downloadCsv("audit")}>Export audit CSV ↓</button></article>
+        </div>
+
+        <div className="advanced-grid lower">
+          <article className="advanced-card reminders-card"><div className="advanced-card-head"><span>AUTOMATION</span><b>4 active rules</b></div><h3>Automated reminders</h3><p>Evidence expiry, remediation, TRA and provider-assurance triggers route alerts to accountable owners.</p><div className="reminder-list">{reminderRules.map((rule) => <div key={rule.id}><span><b>{rule.trigger}</b><small>{rule.audience} · {rule.channel}</small></span><em>{rule.next}</em></div>)}</div><button className="advanced-action" disabled={!roles[activeRole].includes("Schedule reminders" as never) && activeRole !== "Program Administrator"} onClick={() => setReminderStatus("Simulation complete — 7 notifications queued, 0 delivery failures")}>Run reminder cycle</button><small className="simulation-status">{reminderStatus}</small></article>
+          <article className="advanced-card export-card"><div className="advanced-card-head"><span>REPORTING</span><b>CSV + PDF</b></div><h3>Assessor-ready exports</h3><p>Generate portable datasets for analysis or open the dashboard’s print layout to save a management report as PDF.</p><div className="export-actions"><button onClick={() => downloadCsv("controls")}>Controls CSV</button><button onClick={() => downloadCsv("evidence")}>Evidence CSV</button><button onClick={() => window.print()}>Print / save PDF</button></div><small>Exports use the currently published fictional portfolio dataset.</small></article>
+        </div>
+
+        <article className="connector-panel"><div className="pci-heading"><div><p>EVIDENCE-SYSTEM INTEGRATIONS</p><h2>Connector operations center</h2><span className="v3-caption">Configuration demonstrations only—no real tenant credentials are stored.</span></div><span className="connector-health">3 connected · 2 ready</span></div><div className="connector-grid">{connectors.map((connector) => <div className="connector-card" key={connector.id}><div><span>{connector.id}</span><b className={connector.status.toLowerCase()}>{connector.status}</b></div><h3>{connector.name}</h3><p>{connector.type}</p><dl><div><dt>Mapping</dt><dd>{connector.mapping}</dd></div><div><dt>Last sync</dt><dd>{connectorRuns[connector.id] || connector.lastSync}</dd></div></dl><button disabled={!roles[activeRole].includes("Configure connectors" as never)} onClick={() => setConnectorRuns((current) => ({ ...current, [connector.id]: "Simulation completed just now" }))}>{roles[activeRole].includes("Configure connectors" as never) ? "Run test sync" : "Admin permission required"}</button></div>)}</div></article>
+      </section>
 
       <section className="evidence-pack-section" id="evidence-pack">
         <div className="pci-shell">
@@ -328,7 +394,7 @@ export default function PciDssDashboard() {
       </section>
 
       <footer className="pci-footer">
-        <div className="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V3</span><a href="#scorecard">Back to scorecard ↑</a></div>
+        <div className="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V3.1</span><a href="#scorecard">Back to scorecard ↑</a></div>
       </footer>
     </main>
   );
