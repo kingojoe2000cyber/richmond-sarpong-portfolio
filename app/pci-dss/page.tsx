@@ -7,6 +7,7 @@ import "./evidence-pack.css";
 import "./acronyms.css";
 import "./v3.css";
 import "./v31.css";
+import PciAssistant from "./PciAssistant";
 
 const severityOrder: Record<string, number> = { Critical: 4, High: 3, Medium: 2, Low: 1 };
 
@@ -392,6 +393,8 @@ export default function PciDssDashboard() {
           </div>
         </div>
       </section>
+
+      <PciAssistant />
 
       <footer className="pci-footer">
         <div className="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V3.1</span><a href="#scorecard">Back to scorecard ↑</a></div>
