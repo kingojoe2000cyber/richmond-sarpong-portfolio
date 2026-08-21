@@ -115,7 +115,7 @@ export default function PciDssDashboard() {
             </p>
             <div className="pci-hero-actions">
               <a className="pci-btn primary" href="#scorecard">Open scorecard</a>
-              <a className="pci-btn ghost" href="#v3-workspaces">Explore V3 modules</a>
+              <a className="pci-btn ghost" href="#v3-workspaces">Explore V3.1 modules</a>
               <a className="pci-btn ghost pack-action" href="#evidence-pack">Download evidence pack</a>
               <a className="pci-btn ghost" href="../">Back to portfolio</a>
               <a
@@ -147,8 +147,8 @@ export default function PciDssDashboard() {
         <article><span>Remediation horizon</span><strong>180d</strong><small>Five executive checkpoints</small></article>
       </section>
 
-      <nav className="pci-shell v3-module-nav" id="v3-workspaces" aria-label="Version 3 workspaces">
-        <span>V3 WORKSPACES</span>
+      <nav className="pci-shell v3-module-nav" id="v3-workspaces" aria-label="Version 3.1 workspaces">
+        <span>V3.1 WORKSPACES</span>
         <a href="#assessment-workspace">Requirement testing</a>
         <a href="#targeted-risk-analysis">Targeted risk analysis</a>
         <a href="#evidence-lifecycle">Evidence lifecycle</a>
