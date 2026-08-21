@@ -1,4 +1,4 @@
-name: Deploy portfolio and PCI DSS dashboard to GitHub Pages
+name: Deploy portfolio, PCI DSS dashboard and Motion Detector to GitHub Pages
 
 on:
   push:
@@ -23,6 +23,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Add Motion Detector to Pages artifact
+        run: |
+          rm -rf pages/motion-detector
+          mkdir -p pages/motion-detector
+          cp -R motion-detector/. pages/motion-detector/
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
