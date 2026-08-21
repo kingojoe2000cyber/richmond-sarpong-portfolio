@@ -106,7 +106,7 @@ export default function PciDssDashboard() {
       <section className="pci-hero">
         <div className="pci-shell pci-hero-grid">
           <div>
-            <p className="pci-kicker">PCI DSS v4.0.1 · Advanced Version 4.0</p>
+            <p className="pci-kicker">PCI DSS v4.0.1 · Advanced Version 3.1</p>
             <h1>Merchant Assurance Command Center</h1>
             <p className="pci-lead">
               Interactive portfolio dashboard for Akwaaba Retail &amp; Online Ltd. (fictional), translating PCI scope,
@@ -116,7 +116,6 @@ export default function PciDssDashboard() {
             <div className="pci-hero-actions">
               <a className="pci-btn primary" href="#scorecard">Open scorecard</a>
               <a className="pci-btn ghost" href="#v3-workspaces">Explore V3.1 modules</a>
-              <a className="pci-btn primary" href="./pci-dss/operations">Open secure V4 operations</a>
               <a className="pci-btn ghost pack-action" href="#evidence-pack">Download evidence pack</a>
               <a className="pci-btn ghost" href="../">Back to portfolio</a>
               <a
@@ -398,7 +397,7 @@ export default function PciDssDashboard() {
       <PciAssistant />
 
       <footer className="pci-footer">
-        <div className="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V4.0</span><a href="#scorecard">Back to scorecard ↑</a></div>
+        <div className="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V3.1</span><a href="#scorecard">Back to scorecard ↑</a></div>
       </footer>
     </main>
   );
