@@ -3,8 +3,18 @@
 import { useMemo, useState } from "react";
 import { checkpoints, evidence, gaps, remediation, requirementReadiness, risks } from "./data";
 import "./pci-dss.css";
+import "./evidence-pack.css";
 
 const severityOrder: Record<string, number> = { Critical: 4, High: 3, Medium: 2, Low: 1 };
+
+const evidencePackDocuments = [
+  { no: "01", title: "Executive Readiness Report", copy: "Management-level summary of scope, readiness result, priority exposures, governance expectations and immediate actions.", file: "PCI_DSS_V2_Executive_Report.pdf" },
+  { no: "02", title: "PCI DSS Scope Register", copy: "Defined CDE, connected-to systems, reduced-scope assets, owners, third-party dependencies and card-data flow context.", file: "PCI_DSS_V2_Scope_Register.pdf" },
+  { no: "03", title: "PCI DSS Gap Assessment", copy: "Twenty representative simulated findings mapped to requirement references, readiness status, severity and recommended action.", file: "PCI_DSS_V2_Gap_Assessment.pdf" },
+  { no: "04", title: "PCI DSS Evidence Matrix", copy: "Audit-ready evidence expectations, accountable owners and readiness status across all twelve PCI DSS requirement families.", file: "PCI_DSS_V2_Evidence_Matrix.pdf" },
+  { no: "05", title: "PCI DSS Risk Register", copy: "Prioritized payment-security risks with likelihood, impact, inherent score, accountable owner and residual target.", file: "PCI_DSS_V2_Risk_Register.pdf" },
+  { no: "06", title: "PCI DSS Remediation Plan", copy: "A structured 180-day treatment roadmap with owners, priorities, mapped findings, closure evidence and executive checkpoints.", file: "PCI_DSS_V2_Remediation_Plan.pdf" },
+] as const;
 
 export default function PciDssDashboard() {
   const [severity, setSeverity] = useState("All");
@@ -41,7 +51,8 @@ export default function PciDssDashboard() {
             </p>
             <div className="pci-hero-actions">
               <a className="pci-btn primary" href="#scorecard">Open scorecard</a>
-              <a className="pci-btn ghost" href="/">Back to portfolio</a>
+              <a className="pci-btn ghost pack-action" href="#evidence-pack">Download evidence pack</a>
+              <a className="pci-btn ghost" href="../">Back to portfolio</a>
               <a
                 className="pci-btn ghost"
                 href="https://github.com/kingojoe2000cyber/richmond-sarpong-portfolio"
@@ -69,6 +80,44 @@ export default function PciDssDashboard() {
         <article><span>Risk register</span><strong>10</strong><small>{criticalRiskCount} Critical · {highRiskCount} High</small></article>
         <article><span>Missing evidence areas</span><strong>{missingEvidence}</strong><small>Requirements 3, 10 and 11</small></article>
         <article><span>Remediation horizon</span><strong>180d</strong><small>Five executive checkpoints</small></article>
+      </section>
+
+      <section className="evidence-pack-section" id="evidence-pack">
+        <div className="pci-shell">
+          <div className="evidence-pack-header">
+            <div>
+              <p className="pci-kicker">PROFESSIONAL PCI DSS EVIDENCE PACK</p>
+              <h2>Audit-ready documentation recruiters can inspect and download</h2>
+              <p>
+                Six professional portfolio documents demonstrate how the assessment moves from executive reporting and scoping
+                through gap analysis, evidence planning, risk treatment and accountable remediation.
+              </p>
+            </div>
+            <aside className="evidence-pack-bundle">
+              <span>Complete bundle</span>
+              <strong>Download all six documents</strong>
+              <a className="pci-btn" href="./evidence-pack/Richmond_Sarpong_PCI_DSS_V2_Evidence_Pack.zip" download>
+                Download ZIP ↓
+              </a>
+            </aside>
+          </div>
+
+          <div className="evidence-doc-grid">
+            {evidencePackDocuments.map((doc) => (
+              <article className="evidence-doc" key={doc.no}>
+                <span className="doc-no">DOCUMENT {doc.no}</span>
+                <h3>{doc.title}</h3>
+                <p>{doc.copy}</p>
+                <a href={`./evidence-pack/${doc.file}`} target="_blank" rel="noreferrer">Open / download PDF ↗</a>
+              </article>
+            ))}
+          </div>
+
+          <div className="evidence-pack-note">
+            <strong>Portfolio integrity note:</strong> These files support the fictional Akwaaba Retail &amp; Online Ltd. case study.
+            They are not a ROC, AOC, QSA assessment or evidence of services delivered to a real merchant.
+          </div>
+        </div>
       </section>
 
       <section className="pci-section pci-shell" id="scorecard">
