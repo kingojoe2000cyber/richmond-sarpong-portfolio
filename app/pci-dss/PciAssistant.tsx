@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import "./assistant.css";
+import "./assistant-fix.css";
 
 type Message = { from: "assistant" | "user"; text: string };
 
@@ -45,6 +46,6 @@ export default function PciAssistant() {
       <form onSubmit={submit}><label className="sr-only" htmlFor="assistant-question">Ask a PCI DSS question</label><input id="assistant-question" value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask about evidence, risks or controls…" maxLength={240}/><button type="submit">Send</button></form>
       <small>Portfolio guidance only. Not a compliance determination or QSA opinion.</small>
     </section>}
-    <button className="assistant-launcher" onClick={() => setOpen((current) => !current)} aria-expanded={open} aria-label={open ? "Close PCI DSS assistant" : "Open PCI DSS assistant"}><span>AI</span>{open ? "Close assistant" : "Ask PCI Assistant"}</button>
+    <button className="assistant-launcher" onClick={() => setOpen((current) => !current)} aria-expanded={open} aria-label={open ? "Minimize PCI DSS assistant" : "Open PCI DSS assistant"}><span>AI</span>{open ? "Minimize assistant" : "Ask PCI Assistant"}</button>
   </div>;
 }
