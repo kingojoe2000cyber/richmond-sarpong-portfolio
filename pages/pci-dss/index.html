@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="acronyms.css">
   <link rel="stylesheet" href="v3.css">
   <link rel="stylesheet" href="v31.css">
+  <link rel="stylesheet" href="assistant.css">
 </head>
 <body>
 <main class="pci-page">
@@ -159,10 +160,12 @@
 
   <footer class="pci-footer"><div class="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V3.1</span><a href="#scorecard">Back to scorecard ↑</a></div></footer>
 </main>
+<div class="pci-assistant" id="pciAssistant"><section class="assistant-panel" id="assistantPanel" role="dialog" aria-label="PCI DSS Portfolio Assistant" hidden><header><div><span>AI ASSISTANT</span><strong>PCI DSS Portfolio Guide</strong></div><button id="assistantClose" aria-label="Close assistant">×</button></header><div class="assistant-notice">Built-in portfolio knowledge · no dashboard data leaves this page</div><div class="assistant-messages" id="assistantMessages" aria-live="polite"><div class="assistant">Hello. I’m the PCI DSS Portfolio Assistant. Ask me about this fictional assessment, its evidence, risks, controls or dashboard features.</div></div><div class="assistant-prompts" id="assistantPrompts"></div><form id="assistantForm"><label class="sr-only" for="assistantQuestion">Ask a PCI DSS question</label><input id="assistantQuestion" placeholder="Ask about evidence, risks or controls…" maxlength="240"><button type="submit">Send</button></form><small>Portfolio guidance only. Not a compliance determination or QSA opinion.</small></section><button class="assistant-launcher" id="assistantLauncher" aria-expanded="false" aria-label="Open PCI DSS assistant"><span>AI</span><b>Ask PCI Assistant</b></button></div>
 <script src="dashboard.js"></script>
 <script src="evidence-pack.js"></script>
 <script src="acronyms.js"></script>
 <script src="v3.js"></script>
 <script src="v31.js"></script>
+<script src="assistant.js"></script>
 </body>
 </html>
