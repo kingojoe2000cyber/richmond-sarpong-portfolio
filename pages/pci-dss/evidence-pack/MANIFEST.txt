@@ -1,0 +1,14 @@
+PCI DSS v4.0.1 Professional Evidence Pack - Version 2.0
+Prepared by: Richmond Kwadwo Sarpong
+Date: 20 August 2026
+Case study: Akwaaba Retail & Online Ltd. (fictional)
+
+Independent fictional portfolio case study - not a Report on Compliance, Attestation of Compliance, QSA assessment, or evidence of work performed for a real merchant.
+
+Files:
+PCI_DSS_V2_Executive_Report.pdf  SHA256=56ef3df6ee17a6d0040c0709edd29239963864e3f88c045129c7dd314cc444f8
+PCI_DSS_V2_Scope_Register.pdf  SHA256=b52e1602ad4816eee94b1270715bc06cbd6ab844df16615252f3f292aab50d81
+PCI_DSS_V2_Gap_Assessment.pdf  SHA256=feccc8352c86d920d9cd13f4fdf98652b82361e0f19f5260cbb96b2968d08227
+PCI_DSS_V2_Evidence_Matrix.pdf  SHA256=8d68d927ab885c7417eb75c0d50c7a3e47f4c429f68ed7fc208042427c2f4d56
+PCI_DSS_V2_Risk_Register.pdf  SHA256=44f656ad0967825052fd6531b17000f0fbbd4ec257cf993f21dd74bcc44e2158
+PCI_DSS_V2_Remediation_Plan.pdf  SHA256=1fabae09d4bccc5200d655646f9759a08818f7929380882519550ac73318a202

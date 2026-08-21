@@ -1,1 +1,128 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PCI DSS v4.0.1 Merchant Readiness Command Center — fictional independent portfolio case study by Richmond Kwadwo Sarpong."><title>PCI DSS v4.0.1 Merchant Readiness Dashboard | Richmond Sarpong</title><link rel="stylesheet" href="pci.css"></head><body><main class="pci-page"><section class="pci-hero"><div class="pci-shell pci-hero-grid"><div><p class="pci-kicker">PCI DSS v4.0.1 · Version 2</p><h1>Merchant Readiness Command Center</h1><p class="pci-lead">Interactive portfolio dashboard for Akwaaba Retail & Online Ltd. (fictional), translating PCI scope, control gaps, evidence readiness, risk and remediation into an executive view.</p><div class="pci-hero-actions"><a class="pci-btn primary" href="#scorecard">Open scorecard</a><a class="pci-btn ghost" href="../">Back to portfolio</a><a class="pci-btn ghost" target="_blank" rel="noreferrer" href="https://github.com/kingojoe2000cyber/richmond-sarpong-portfolio/tree/main/app/pci-dss">View GitHub ↗</a></div></div><aside class="pci-disclaimer"><span>Portfolio disclaimer</span><strong>Independent fictional readiness assessment</strong><p>This dashboard is not a Report on Compliance, Attestation of Compliance, QSA assessment or evidence of a real merchant engagement. Operational data shown here is simulated for portfolio demonstration.</p></aside></div></section><section class="pci-shell pci-summary" id="summary"></section><section class="pci-section pci-shell" id="scorecard"><div class="pci-heading"><div><p>01 / COMPLIANCE SCORECARD</p><h2>Readiness across all 12 requirement families</h2></div><div class="pci-score-ring" id="scoreRing"><span id="scoreValue">0%</span><small>portfolio readiness</small></div></div><div class="requirement-grid" id="requirements"></div></section><section class="pci-section pci-ink" id="risk-heatmap"><div class="pci-shell"><div class="pci-heading inverse"><div><p>02 / RISK HEAT MAP</p><h2>Inherent PCI risk concentration</h2></div><p class="pci-subcopy">Likelihood × impact. Risk IDs are plotted in their inherent-risk cells.</p></div><div class="heatmap-layout"><div class="heatmap" id="heatmap"><div class="heat-axis x">Likelihood →</div><div class="heat-axis y">Impact →</div></div><div class="risk-list" id="riskList"></div></div></div></section><section class="pci-section pci-shell" id="evidence"><div class="pci-heading"><div><p>03 / EVIDENCE TRACKER</p><h2>What an independent reviewer would expect to see</h2></div><div class="filter-group" id="evidenceFilters"><button data-filter="All" class="active">All</button><button data-filter="Partial">Partial</button><button data-filter="Missing">Missing</button></div></div><div class="evidence-table-wrap"><table class="evidence-table"><thead><tr><th>Req.</th><th>Control theme</th><th>Expected evidence</th><th>Owner</th><th>Readiness</th></tr></thead><tbody id="evidenceBody"></tbody></table></div></section><section class="pci-section pci-soft" id="gaps"><div class="pci-shell"><div class="pci-heading"><div><p>04 / GAP REGISTER</p><h2>Representative control gaps and recommended action</h2></div><div class="filter-group" id="gapFilters"><button data-filter="All" class="active">All</button><button data-filter="Critical">Critical</button><button data-filter="High">High</button><button data-filter="Medium">Medium</button></div></div><div class="gap-grid" id="gapGrid"></div></div></section><section class="pci-section pci-shell" id="remediation"><div class="pci-heading"><div><p>05 / REMEDIATION ROADMAP</p><h2>Prioritized 180-day closure plan</h2></div></div><div class="roadmap" id="roadmap"></div></section><section class="pci-section pci-ink" id="governance"><div class="pci-shell"><div class="pci-heading inverse"><div><p>06 / EXECUTIVE GOVERNANCE</p><h2>Decision gates that prove the program is maturing</h2></div></div><div class="checkpoint-grid" id="checkpoints"></div><div class="closure-note"><b>Closure principle</b><p>Remediation is complete only when the control is implemented, independently checked, technically retested where applicable and supported by durable, attributable evidence.</p></div></div></section><footer class="pci-footer"><div class="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V2</span><a href="#scorecard">Back to scorecard ↑</a></div></footer></main><script src="dashboard.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="PCI DSS v4.0.1 Merchant Readiness Command Center and professional evidence pack — fictional independent portfolio case study by Richmond Kwadwo Sarpong.">
+  <title>PCI DSS v4.0.1 Merchant Readiness Dashboard | Richmond Sarpong</title>
+  <link rel="stylesheet" href="pci.css">
+  <link rel="stylesheet" href="evidence-pack.css">
+</head>
+<body>
+<main class="pci-page">
+  <section class="pci-hero">
+    <div class="pci-shell pci-hero-grid">
+      <div>
+        <p class="pci-kicker">PCI DSS v4.0.1 · Version 2</p>
+        <h1>Merchant Readiness Command Center</h1>
+        <p class="pci-lead">Interactive portfolio dashboard for Akwaaba Retail &amp; Online Ltd. (fictional), translating PCI scope, control gaps, evidence readiness, risk and remediation into an executive view.</p>
+        <div class="pci-hero-actions">
+          <a class="pci-btn primary" href="#scorecard">Open scorecard</a>
+          <a class="pci-btn pack-action" href="evidence-pack/Richmond_Sarpong_PCI_DSS_V2_Evidence_Pack.zip" download>Download Evidence Pack ↓</a>
+          <a class="pci-btn ghost" href="../">Back to portfolio</a>
+          <a class="pci-btn ghost" target="_blank" rel="noreferrer" href="https://github.com/kingojoe2000cyber/richmond-sarpong-portfolio/tree/main/app/pci-dss">View GitHub ↗</a>
+        </div>
+      </div>
+      <aside class="pci-disclaimer">
+        <span>Portfolio disclaimer</span>
+        <strong>Independent fictional readiness assessment</strong>
+        <p>This dashboard and evidence pack are not a Report on Compliance, Attestation of Compliance, QSA assessment or evidence of a real merchant engagement. Operational data shown here is simulated for portfolio demonstration.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="pci-shell pci-summary" id="summary"></section>
+
+  <section class="evidence-pack-section" id="evidence-pack">
+    <div class="pci-shell">
+      <div class="evidence-pack-head">
+        <div>
+          <p class="pci-kicker">PROFESSIONAL PORTFOLIO EVIDENCE</p>
+          <h2>PCI DSS v4.0.1 Evidence Pack</h2>
+          <p>Six audit-style artifacts demonstrate how the fictional assessment moves from executive reporting and scoping through control testing, evidence planning, risk treatment and accountable remediation.</p>
+        </div>
+        <aside class="evidence-pack-bundle">
+          <span>Complete bundle</span>
+          <strong>6 PDFs + SHA-256 manifest</strong>
+          <a class="pci-btn primary" href="evidence-pack/Richmond_Sarpong_PCI_DSS_V2_Evidence_Pack.zip" download>Download full ZIP ↓</a>
+        </aside>
+      </div>
+
+      <div class="evidence-doc-grid">
+        <article class="evidence-doc">
+          <span class="doc-no">01 / EXECUTIVE REPORT</span>
+          <h3>Executive Readiness Report</h3>
+          <p>Management-level summary of merchant profile, scope, readiness posture, key findings, evidence maturity, risk concentration and priority decisions.</p>
+          <a href="evidence-pack/PCI_DSS_V2_Executive_Report.pdf" download>Download PDF ↓</a>
+        </article>
+        <article class="evidence-doc">
+          <span class="doc-no">02 / SCOPE REGISTER</span>
+          <h3>PCI Scope Register</h3>
+          <p>Documents payment channels, nine in-scope components, reduced-scope areas, third-party service providers and the cardholder-data flow narrative.</p>
+          <a href="evidence-pack/PCI_DSS_V2_Scope_Register.pdf" download>Download PDF ↓</a>
+        </article>
+        <article class="evidence-doc">
+          <span class="doc-no">03 / GAP ASSESSMENT</span>
+          <h3>Control Gap Assessment</h3>
+          <p>Twenty representative observations mapped to PCI DSS requirement references, implementation status, severity and recommended corrective actions.</p>
+          <a href="evidence-pack/PCI_DSS_V2_Gap_Assessment.pdf" download>Download PDF ↓</a>
+        </article>
+        <article class="evidence-doc">
+          <span class="doc-no">04 / EVIDENCE MATRIX</span>
+          <h3>Audit Evidence Matrix</h3>
+          <p>Expected evidence by all 12 PCI DSS requirement families with accountable owners and current portfolio readiness status.</p>
+          <a href="evidence-pack/PCI_DSS_V2_Evidence_Matrix.pdf" download>Download PDF ↓</a>
+        </article>
+        <article class="evidence-doc">
+          <span class="doc-no">05 / RISK REGISTER</span>
+          <h3>PCI Risk Register</h3>
+          <p>Ten payment-security risk scenarios with likelihood, impact, inherent score, accountable owner and target residual-risk position.</p>
+          <a href="evidence-pack/PCI_DSS_V2_Risk_Register.pdf" download>Download PDF ↓</a>
+        </article>
+        <article class="evidence-doc">
+          <span class="doc-no">06 / REMEDIATION PLAN</span>
+          <h3>180-Day Remediation Plan</h3>
+          <p>Prioritized corrective-action roadmap with mapped gaps and risks, owners, success evidence, management gates and closure criteria.</p>
+          <a href="evidence-pack/PCI_DSS_V2_Remediation_Plan.pdf" download>Download PDF ↓</a>
+        </article>
+      </div>
+
+      <div class="evidence-integrity">
+        <span><strong>Evidence integrity:</strong> SHA-256 hashes are provided so reviewers can verify the downloaded portfolio artifacts have not changed.</span>
+        <a href="evidence-pack/MANIFEST.txt" download>Download checksum manifest ↓</a>
+      </div>
+      <p class="evidence-note">All artifacts are explicitly labelled as an independent fictional portfolio case study. They demonstrate PCI DSS scoping, evidence planning, control-gap analysis, risk assessment, remediation governance and executive reporting; they do not represent certification or a real QSA engagement.</p>
+    </div>
+  </section>
+
+  <section class="pci-section pci-shell" id="scorecard">
+    <div class="pci-heading"><div><p>01 / COMPLIANCE SCORECARD</p><h2>Readiness across all 12 requirement families</h2></div><div class="pci-score-ring" id="scoreRing"><span id="scoreValue">0%</span><small>portfolio readiness</small></div></div>
+    <div class="requirement-grid" id="requirements"></div>
+  </section>
+
+  <section class="pci-section pci-ink" id="risk-heatmap">
+    <div class="pci-shell"><div class="pci-heading inverse"><div><p>02 / RISK HEAT MAP</p><h2>Inherent PCI risk concentration</h2></div><p class="pci-subcopy">Likelihood × impact. Risk IDs are plotted in their inherent-risk cells.</p></div><div class="heatmap-layout"><div class="heatmap" id="heatmap"><div class="heat-axis x">Likelihood →</div><div class="heat-axis y">Impact →</div></div><div class="risk-list" id="riskList"></div></div></div>
+  </section>
+
+  <section class="pci-section pci-shell" id="evidence">
+    <div class="pci-heading"><div><p>03 / EVIDENCE TRACKER</p><h2>What an independent reviewer would expect to see</h2></div><div class="filter-group" id="evidenceFilters"><button data-filter="All" class="active">All</button><button data-filter="Partial">Partial</button><button data-filter="Missing">Missing</button></div></div>
+    <div class="evidence-table-wrap"><table class="evidence-table"><thead><tr><th>Req.</th><th>Control theme</th><th>Expected evidence</th><th>Owner</th><th>Readiness</th></tr></thead><tbody id="evidenceBody"></tbody></table></div>
+  </section>
+
+  <section class="pci-section pci-soft" id="gaps">
+    <div class="pci-shell"><div class="pci-heading"><div><p>04 / GAP REGISTER</p><h2>Representative control gaps and recommended action</h2></div><div class="filter-group" id="gapFilters"><button data-filter="All" class="active">All</button><button data-filter="Critical">Critical</button><button data-filter="High">High</button><button data-filter="Medium">Medium</button></div></div><div class="gap-grid" id="gapGrid"></div></div>
+  </section>
+
+  <section class="pci-section pci-shell" id="remediation">
+    <div class="pci-heading"><div><p>05 / REMEDIATION ROADMAP</p><h2>Prioritized 180-day closure plan</h2></div></div><div class="roadmap" id="roadmap"></div>
+  </section>
+
+  <section class="pci-section pci-ink" id="governance">
+    <div class="pci-shell"><div class="pci-heading inverse"><div><p>06 / EXECUTIVE GOVERNANCE</p><h2>Decision gates that prove the program is maturing</h2></div></div><div class="checkpoint-grid" id="checkpoints"></div><div class="closure-note"><b>Closure principle</b><p>Remediation is complete only when the control is implemented, independently checked, technically retested where applicable and supported by durable, attributable evidence.</p></div></div>
+  </section>
+
+  <footer class="pci-footer"><div class="pci-shell"><span>© 2026 Richmond Kwadwo Sarpong · PCI DSS v4.0.1 Portfolio V2</span><a href="#scorecard">Back to scorecard ↑</a></div></footer>
+</main>
+<script src="dashboard.js"></script>
+</body>
+</html>
