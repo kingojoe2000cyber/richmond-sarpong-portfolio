@@ -4,16 +4,17 @@ import { useMemo, useState } from "react";
 import { checkpoints, evidence, gaps, remediation, requirementReadiness, risks } from "./data";
 import "./pci-dss.css";
 import "./evidence-pack.css";
+import "./acronyms.css";
 
 const severityOrder: Record<string, number> = { Critical: 4, High: 3, Medium: 2, Low: 1 };
 
 const evidencePackDocuments = [
-  { no: "01", title: "Executive Readiness Report", copy: "Management-level summary of scope, readiness result, priority exposures, governance expectations and immediate actions.", file: "PCI_DSS_V2_Executive_Report.pdf" },
-  { no: "02", title: "PCI DSS Scope Register", copy: "Defined CDE, connected-to systems, reduced-scope assets, owners, third-party dependencies and card-data flow context.", file: "PCI_DSS_V2_Scope_Register.pdf" },
-  { no: "03", title: "PCI DSS Gap Assessment", copy: "Twenty representative simulated findings mapped to requirement references, readiness status, severity and recommended action.", file: "PCI_DSS_V2_Gap_Assessment.pdf" },
-  { no: "04", title: "PCI DSS Evidence Matrix", copy: "Audit-ready evidence expectations, accountable owners and readiness status across all twelve PCI DSS requirement families.", file: "PCI_DSS_V2_Evidence_Matrix.pdf" },
-  { no: "05", title: "PCI DSS Risk Register", copy: "Prioritized payment-security risks with likelihood, impact, inherent score, accountable owner and residual target.", file: "PCI_DSS_V2_Risk_Register.pdf" },
-  { no: "06", title: "PCI DSS Remediation Plan", copy: "A structured 180-day treatment roadmap with owners, priorities, mapped findings, closure evidence and executive checkpoints.", file: "PCI_DSS_V2_Remediation_Plan.pdf" },
+  { no: "01", title: "Executive Readiness Report", copy: "Management-level summary of scope, readiness result, priority exposures, governance expectations and immediate actions.", file: "PCI_DSS_V2_Executive_Report.pdf", acronyms: [["AOC", "Attestation of Compliance"], ["CDE", "Cardholder Data Environment"], ["MFA", "Multi-Factor Authentication"], ["PCI DSS", "Payment Card Industry Data Security Standard"], ["QSA", "Qualified Security Assessor"], ["ROC", "Report on Compliance"]] },
+  { no: "02", title: "PCI DSS Scope Register", copy: "Defined CDE, connected-to systems, reduced-scope assets, owners, third-party dependencies and card-data flow context.", file: "PCI_DSS_V2_Scope_Register.pdf", acronyms: [["CDE", "Cardholder Data Environment"], ["CHD", "Cardholder Data"], ["P2PE", "Point-to-Point Encryption"], ["PAN", "Primary Account Number"], ["POS", "Point of Sale"], ["SAD", "Sensitive Authentication Data"], ["TPSP", "Third-Party Service Provider"]] },
+  { no: "03", title: "PCI DSS Gap Assessment", copy: "Twenty representative simulated findings mapped to requirement references, readiness status, severity and recommended action.", file: "PCI_DSS_V2_Gap_Assessment.pdf", acronyms: [["ASV", "Approved Scanning Vendor"], ["MFA", "Multi-Factor Authentication"], ["NTP", "Network Time Protocol"], ["POA&M", "Plan of Action and Milestones"], ["RBAC", "Role-Based Access Control"], ["SAQ", "Self-Assessment Questionnaire"]] },
+  { no: "04", title: "PCI DSS Evidence Matrix", copy: "Audit-ready evidence expectations, accountable owners and readiness status across all twelve PCI DSS requirement families.", file: "PCI_DSS_V2_Evidence_Matrix.pdf", acronyms: [["ASV", "Approved Scanning Vendor"], ["CDE", "Cardholder Data Environment"], ["NTP", "Network Time Protocol"], ["RACI", "Responsible, Accountable, Consulted and Informed"], ["SIEM", "Security Information and Event Management"], ["TPSP", "Third-Party Service Provider"]] },
+  { no: "05", title: "PCI DSS Risk Register", copy: "Prioritized payment-security risks with likelihood, impact, inherent score, accountable owner and residual target.", file: "PCI_DSS_V2_Risk_Register.pdf", acronyms: [["CDE", "Cardholder Data Environment"], ["MFA", "Multi-Factor Authentication"], ["PAN", "Primary Account Number"], ["RTO", "Recovery Time Objective"], ["SPOF", "Single Point of Failure"], ["TSP", "Third-Party Service Provider"]] },
+  { no: "06", title: "PCI DSS Remediation Plan", copy: "A structured 180-day treatment roadmap with owners, priorities, mapped findings, closure evidence and executive checkpoints.", file: "PCI_DSS_V2_Remediation_Plan.pdf", acronyms: [["ASV", "Approved Scanning Vendor"], ["MFA", "Multi-Factor Authentication"], ["POA&M", "Plan of Action and Milestones"], ["RACI", "Responsible, Accountable, Consulted and Informed"], ["SIEM", "Security Information and Event Management"], ["SLA", "Service-Level Agreement"]] },
 ] as const;
 
 export default function PciDssDashboard() {
@@ -109,6 +110,11 @@ export default function PciDssDashboard() {
                 <h3>{doc.title}</h3>
                 <p>{doc.copy}</p>
                 <a href={`./evidence-pack/${doc.file}`} target="_blank" rel="noreferrer">Open / download PDF ↗</a>
+                <details className="doc-glossary">
+                  <summary>Acronyms and full meanings</summary>
+                  <dl>{doc.acronyms.map(([term, meaning]) => <div key={term}><dt>{term}</dt><dd>{meaning}</dd></div>)}</dl>
+                  <small>The PDF includes an expanded glossary with plain-language explanations.</small>
+                </details>
               </article>
             ))}
           </div>

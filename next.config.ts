@@ -5,6 +5,9 @@ const repositoryName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "richmond
 const pagesBasePath = isGitHubPages ? `/${repositoryName}` : "";
 
 const nextConfig: NextConfig = {
+  // The /pages directory is also the checked-in static GitHub Pages artifact.
+  // Restrict framework page discovery so its browser-only .js files are not SSR routes.
+  pageExtensions: ["ts", "tsx"],
   ...(isGitHubPages
     ? {
         output: "export" as const,
