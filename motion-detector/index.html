@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motion Detector V2.2</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Security Monitoring Dashboard</p>
+        <h1>Motion Detector V2.2</h1>
+        <p class="subtitle">Live motion detection with tracking boxes, snapshots, event history, alarm, camera selection and long-range calibration.</p>
+      </div>
+
+      <div class="system-status">
+        <span id="led" class="led stopped"></span>
+        <div>
+          <strong id="statusText">Camera stopped</strong>
+          <small id="motionScore">Motion score: 0.00%</small>
+        </div>
+      </div>
+    </header>
+
+    <section class="metric-grid">
+      <article class="metric"><span>Motion events</span><strong id="eventCount">0</strong></article>
+      <article class="metric"><span>Last motion</span><strong id="lastMotion">—</strong></article>
+      <article class="metric"><span>Snapshots</span><strong id="snapshotCount">0</strong></article>
+      <article class="metric"><span>Detector mode</span><strong id="modeText">Standard</strong></article>
+    </section>
+
+    <section class="control-panel">
+      <div class="control-row main-actions">
+        <button id="startBtn" class="primary">Start Camera</button>
+        <button id="stopBtn" disabled>Stop Camera</button>
+        <button id="snapshotBtn" disabled>Take Snapshot</button>
+        <button id="saveEvidenceBtn" disabled>Save Motion Evidence</button>
+        <button id="clearSnapshotsBtn">Clear Snapshots</button>
+        <button id="testBtn">Test Detector</button>
+      </div>
+
+      <div class="control-row settings-row">
+        <label class="field camera-field"><span>Camera</span><select id="cameraSelect"><option value="">Default camera</option></select></label>
+        <label class="toggle"><input id="alarmToggle" type="checkbox" /><span>Alarm</span></label>
+        <label class="toggle"><input id="autoSnapshotToggle" type="checkbox" checked /><span>Auto Snapshot</span></label>
+        <label class="toggle"><input id="longRangeToggle" type="checkbox" /><span>Long Range</span></label>
+        <label class="field sensitivity-field"><span>Sensitivity</span><input id="sensitivity" type="range" min="5" max="100" value="60" /><output id="sensitivityValue">60</output></label>
+      </div>
+
+      <div class="test-strip"><span id="testDot" class="test-dot"></span><strong id="testStatus">System test not run</strong><small id="testDetails">Start the camera, then click Test Detector.</small></div>
+    </section>
+
+    <section class="dashboard">
+      <section class="viewer-card">
+        <div class="viewer-header"><div><strong>Live Camera</strong><small id="cameraInfo">Waiting for camera</small></div><span id="motionBadge" class="badge">NO MOTION</span></div>
+        <div id="videoStage" class="video-stage">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="overlay"></canvas>
+          <div id="emptyCamera" class="empty-camera"><strong>Camera feed will appear here</strong><small>Click Start Camera and allow browser access.</small></div>
+        </div>
+        <canvas id="analysisCanvas" hidden></canvas>
+        <div class="calibration-bar"><div><strong>Long-range calibration</strong><small id="rangeHelp">Standard mode is active.</small></div><div class="calibration-scale"><span>Near</span><div class="scale-track"><div id="scaleFill" class="scale-fill"></div></div><span>Far</span></div></div>
+      </section>
+
+      <aside class="side-column">
+        <section class="panel"><div class="panel-title"><h2>Motion History</h2><button id="clearHistoryBtn" class="small-btn">Clear</button></div><div id="historyList" class="scroll-list"><p class="empty">No motion events yet.</p></div></section>
+        <section class="panel"><div class="panel-title"><h2>Snapshots</h2><button id="clearSnapshotsSideBtn" class="small-btn">Clear</button></div><div id="snapshotList" class="scroll-list"><p class="empty">No snapshots yet.</p></div></section>
+        <section class="panel"><div class="panel-title"><h2>Saved Evidence</h2><button id="clearEvidenceBtn" class="small-btn">Clear</button></div><div id="evidenceList" class="scroll-list"><p class="empty">No saved evidence yet.</p></div></section>
+      </aside>
+    </section>
+
+    <section class="info-grid">
+      <article><h2>5 metre target</h2><p>Enable Long Range mode and use sensitivity between 60 and 80 as a starting point. A fixed 1080p camera, good lighting and clear contrast improve distant-motion detection. Exact physical range still depends on the camera and environment.</p></article>
+      <article><h2>Privacy</h2><p>Motion analysis runs locally in the browser. This version does not upload video. Snapshots stay in the current session unless you download them.</p></article>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
