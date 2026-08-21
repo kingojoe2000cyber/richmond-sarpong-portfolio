@@ -1,15 +1,12 @@
-PCI DSS v4.0.1 Professional Evidence Pack - Version 2.0
-Prepared by: Richmond Kwadwo Sarpong
-Date: 20 August 2026
-Case study: Akwaaba Retail & Online Ltd. (fictional)
+RICHMOND KWADWO SARPONG - PCI DSS v4.0.1 EVIDENCE PACK V2
 
-Independent fictional portfolio case study - not a Report on Compliance, Attestation of Compliance, QSA assessment, or evidence of work performed for a real merchant.
+Each PDF includes a document-specific Acronyms and Definitions section.
+All content supports the fictional Akwaaba Retail & Online Ltd. portfolio case study.
 
-Contents:
-1. Executive Readiness Report
-2. PCI DSS Scope Register
-3. PCI DSS Gap Assessment
-4. PCI DSS Evidence Matrix
-5. PCI DSS Risk Register
-6. PCI DSS Remediation Plan
-7. Complete ZIP bundle
+FILES
+- PCI_DSS_V2_Executive_Report.pdf
+- PCI_DSS_V2_Scope_Register.pdf
+- PCI_DSS_V2_Gap_Assessment.pdf
+- PCI_DSS_V2_Evidence_Matrix.pdf
+- PCI_DSS_V2_Risk_Register.pdf
+- PCI_DSS_V2_Remediation_Plan.pdf
