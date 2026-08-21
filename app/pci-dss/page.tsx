@@ -33,11 +33,11 @@ const reminderRules = [
 ] as const;
 
 const connectors = [
-  { id: "CON-01", name: "Microsoft SharePoint", type: "Document repository", mapping: "PCI Evidence Library", status: "Connected", lastSync: "2026-08-21 14:30" },
-  { id: "CON-02", name: "Microsoft OneDrive", type: "Evidence intake", mapping: "Control Owner Uploads", status: "Connected", lastSync: "2026-08-21 13:15" },
-  { id: "CON-03", name: "ServiceNow GRC", type: "Control and finding exchange", mapping: "PCI Assessment", status: "Ready", lastSync: "Not run" },
-  { id: "CON-04", name: "Jira", type: "Remediation tickets", mapping: "PCI-DSS project", status: "Connected", lastSync: "2026-08-21 15:00" },
-  { id: "CON-05", name: "AWS Security Hub", type: "Technical evidence feed", mapping: "CDE findings", status: "Ready", lastSync: "Not run" },
+  { id: "CON-01", name: "Microsoft SharePoint", type: "Document repository", mapping: "PCI Evidence Library", status: "Simulation active", lastSync: "Ready to run" },
+  { id: "CON-02", name: "Microsoft OneDrive", type: "Evidence intake", mapping: "Control Owner Uploads", status: "Simulation active", lastSync: "Ready to run" },
+  { id: "CON-03", name: "ServiceNow GRC", type: "Control and finding exchange", mapping: "PCI Assessment", status: "Simulation active", lastSync: "Ready to run" },
+  { id: "CON-04", name: "Jira", type: "Remediation tickets", mapping: "PCI-DSS project", status: "Simulation active", lastSync: "Ready to run" },
+  { id: "CON-05", name: "AWS Security Hub", type: "Technical evidence feed", mapping: "CDE findings", status: "Simulation active", lastSync: "Ready to run" },
 ] as const;
 
 const evidencePackDocuments = [
@@ -170,7 +170,7 @@ export default function PciDssDashboard() {
           <article className="advanced-card export-card"><div className="advanced-card-head"><span>REPORTING</span><b>CSV + PDF</b></div><h3>Assessor-ready exports</h3><p>Generate portable datasets for analysis or open the dashboard’s print layout to save a management report as PDF.</p><div className="export-actions"><button onClick={() => downloadCsv("controls")}>Controls CSV</button><button onClick={() => downloadCsv("evidence")}>Evidence CSV</button><button onClick={() => window.print()}>Print / save PDF</button></div><small>Exports use the currently published fictional portfolio dataset.</small></article>
         </div>
 
-        <article className="connector-panel"><div className="pci-heading"><div><p>EVIDENCE-SYSTEM INTEGRATIONS</p><h2>Connector operations center</h2><span className="v3-caption">Configuration demonstrations only—no real tenant credentials are stored.</span></div><span className="connector-health">3 connected · 2 ready</span></div><div className="connector-grid">{connectors.map((connector) => <div className="connector-card" key={connector.id}><div><span>{connector.id}</span><b className={connector.status.toLowerCase()}>{connector.status}</b></div><h3>{connector.name}</h3><p>{connector.type}</p><dl><div><dt>Mapping</dt><dd>{connector.mapping}</dd></div><div><dt>Last sync</dt><dd>{connectorRuns[connector.id] || connector.lastSync}</dd></div></dl><button disabled={!roles[activeRole].includes("Configure connectors" as never)} onClick={() => setConnectorRuns((current) => ({ ...current, [connector.id]: "Simulation completed just now" }))}>{roles[activeRole].includes("Configure connectors" as never) ? "Run test sync" : "Admin permission required"}</button></div>)}</div></article>
+        <article className="connector-panel"><div className="pci-heading"><div><p>EVIDENCE-SYSTEM INTEGRATIONS</p><h2>Connector operations center</h2><span className="v3-caption">All connector simulations are active for portfolio exploration—no real tenant credentials are stored.</span></div><span className="connector-health">5 simulations active</span></div><div className="connector-grid">{connectors.map((connector) => <div className="connector-card" key={connector.id}><div><span>{connector.id}</span><b className="simulation-active">{connector.status}</b></div><h3>{connector.name}</h3><p>{connector.type}</p><dl><div><dt>Mapping</dt><dd>{connector.mapping}</dd></div><div><dt>Last sync</dt><dd>{connectorRuns[connector.id] || connector.lastSync}</dd></div></dl><button onClick={() => setConnectorRuns((current) => ({ ...current, [connector.id]: "Simulation completed just now" }))}>Run test sync</button></div>)}</div></article>
       </section>
 
       <section className="evidence-pack-section" id="evidence-pack">
